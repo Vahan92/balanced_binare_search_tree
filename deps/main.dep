@@ -1,1 +1,0 @@
-deps/main.dep  obj/main.o: src/main.cpp src/node.hpp src/tree.hpp

@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <algorithm>
+using namespace std;
 
 Tree::Tree() : root(NULL), parent(NULL) {} 
 
@@ -76,7 +78,46 @@ void Tree::postorder(Node* parent, int indent = 4)
                 }*/
                 std::cout << std::endl;
         }
-}       
+}
+
+int get_height( Node* N)
+{
+    if (N == NULL)
+        return 0;
+    return N->height;
+}
+
+    Node* single_right_rotate(Node* &parent)
+    {
+        Node* u = parent->left;
+        parent->left = u->right;
+        u->right = parent;
+        parent->height = max(get_height(parent->left), get_height(parent->right))+1;
+        u->height = max(get_height(u->left), parent->height)+1;
+        return u;
+    }
+
+    Node* single_left_rotate(Node* &parent)
+    {
+        Node* u = parent->right;
+        parent->right = u->left;
+        u->left = parent;
+        parent->height = std::max(get_height(parent->left), get_height(parent->right))+1;
+        u->height = max(get_height(parent->right), parent->height)+1 ;
+        return u;
+    }
+
+    Node* double_left_rotate(Node* &parent)
+    {
+        parent->right = single_right_rotate(parent->right);
+        return single_left_rotate(parent);
+    }
+
+    Node* double_right_rotate(Node* &parent)
+    {
+        parent->left = single_left_rotate(parent->left);
+        return single_right_rotate(parent);
+}
 
 void Tree::print_postorder()
 {
@@ -145,11 +186,4 @@ Node* Tree::remove_node(Node* parent, int data)
 void Tree::remove(int data)
 {
         remove_node(root, data);
-}
-
-int get_height( Node* N)
-{
-    if (N == NULL)
-        return 0;
-    return N->height;
 }
