@@ -1,0 +1,1 @@
+deps/tree.dep  obj/tree.o: src/tree.cpp src/node.hpp src/tree.hpp
