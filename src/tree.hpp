@@ -22,7 +22,8 @@ class Tree
                 Node* double_right_rotate(Node*);
                 int left_count(Node*, int);
                 int get_height(Node*);
-                
+                Node* get_root() { return root;};
+                void print_2d(Node*, int);
         private:
                 Node* root;
                 Node* parent;

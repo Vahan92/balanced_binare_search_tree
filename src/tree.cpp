@@ -87,36 +87,49 @@ int get_height( Node* N)
     return N->height;
 }
 
-    Node* single_right_rotate(Node* &parent)
+    Node* single_right_rotate(Node* parent)
     {
-        Node* u = parent->left;
-        parent->left = u->right;
-        u->right = parent;
+        Node* temp = parent->left;
+        parent->left = temp->right;
+        temp->right = parent;
         parent->height = max(get_height(parent->left), get_height(parent->right))+1;
-        u->height = max(get_height(u->left), parent->height)+1;
-        return u;
+        temp->height = max(get_height(temp->left), parent->height)+1;
+        return temp;
     }
 
-    Node* single_left_rotate(Node* &parent)
+    Node* single_left_rotate(Node* parent)
     {
-        Node* u = parent->right;
-        parent->right = u->left;
-        u->left = parent;
+        Node* temp = parent->right;
+        parent->right = temp->left;
+        temp->left = parent;
         parent->height = std::max(get_height(parent->left), get_height(parent->right))+1;
-        u->height = max(get_height(parent->right), parent->height)+1 ;
-        return u;
+        temp->height = max(get_height(parent->right), parent->height)+1 ;
+        return temp;
     }
 
-    Node* double_left_rotate(Node* &parent)
+    Node* double_left_rotate(Node* parent)
     {
         parent->right = single_right_rotate(parent->right);
         return single_left_rotate(parent);
     }
 
-    Node* double_right_rotate(Node* &parent)
+    Node* double_right_rotate(Node* parent)
     {
         parent->left = single_left_rotate(parent->left);
         return single_right_rotate(parent);
+}
+
+void Tree::print_2d(Node* parent, int indent)
+{
+    if (parent != nullptr)
+    {
+        print_2d(parent->left, indent + 4);
+        if (indent > 0) {
+            std::cout << std::setw(indent) << " ";
+        }
+        std::cout << parent->value << std::endl;
+        print_2d(parent->right, indent + 4);
+    }
 }
 
 void Tree::print_postorder()
@@ -177,10 +190,30 @@ Node* Tree::remove_node(Node* parent, int data)
                         parent =parent -> right;
                         return parent;
                 } else {
-                        Node* temp = min_node(parent->right);
+                        temp = min_node(parent->right);
                         parent->value = temp->value;
                         parent->right = remove_node(parent->right, temp->value);                        
         }
+        // if(parent == NULL)
+        //     return parent;
+
+        // parent->height = max(get_height(parent->left), get_height(parent->right))+1;
+
+        // if(get_height(parent->left) - get_height(parent->right) == 2)
+        // {
+        //     if(get_height(parent->left->left) - get_height(parent->left->right) == 1)
+        //         return single_left_rotate(parent);
+        //     else
+        //         return double_left_rotate(parent);
+        // }
+        // else if(get_height(parent->right) - get_height(parent->left) == 2)
+        // {
+        //     if(get_height(parent->right->right) - get_height(parent->right->left) == 1)
+        //         return single_right_rotate(parent);
+        //     else
+        //         return double_right_rotate(parent);
+        // }
+        // return parent;
 }
 }
 void Tree::remove(int data)
