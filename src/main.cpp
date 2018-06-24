@@ -18,22 +18,14 @@ int main()
         t.insert_data(119);
         t.insert_data(129);
         t.insert_data(39);
-        t.insert_data(49);
-        t.insert_data(59);
-        t.insert_data(69);
-        t.insert_data(79);
-        t.insert_data(29);
-        t.insert_data(77);
-        t.insert_data(30);
-        t.insert_data(21);
-        t.insert_data(16);
+        t.insert_data(49);       
         //t.left_count();
         //t.find(189);
         //t.find(35);
         //t.print_postorder();
         //t.remove(189);
         t.print_2d(t.get_root(),1);
-        t.remove(69);
+        t.remove(119);
         t.print_2d(t.get_root(),1);
         return 0;
 }

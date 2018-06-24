@@ -28,7 +28,7 @@ Node* Tree::insert(Node* parent, int data)
                 if(data < parent->left->value)
                     parent = single_right_rotate(parent);
                 else
-                    parent = double_right_rotate(parent);
+                    parent = left_right_rotate(parent);
                 }
         } else {
                 parent -> right = insert(parent -> right, data);
@@ -36,7 +36,7 @@ Node* Tree::insert(Node* parent, int data)
                 if(data > parent->right->value)
                     parent = single_left_rotate(parent);
                 else
-                    parent = double_left_rotate(parent);
+                    parent = right_left_rotate(parent);
                 }
         }
         parent->height = max(get_height(parent->left), get_height(parent->right))+1;
@@ -121,13 +121,13 @@ int Tree::get_height( Node* N)
         return temp;
     }
 
-    Node* Tree::double_left_rotate(Node* parent)
+    Node* Tree::right_left_rotate(Node* parent)
     {
         parent->right = single_right_rotate(parent->right);
         return single_left_rotate(parent);
     }
 
-    Node* Tree::double_right_rotate(Node* parent)
+    Node* Tree::left_right_rotate(Node* parent)
     {
         parent->left = single_left_rotate(parent->left);
         return single_right_rotate(parent);
@@ -219,14 +219,14 @@ Node* Tree::remove_node(Node* parent, int data)
             if(get_height(parent->left->left) - get_height(parent->left->right) == 1)
                 return single_left_rotate(parent);
             else
-                return double_left_rotate(parent);
+                return right_left_rotate(parent);
         }
         else if(get_height(parent->right) - get_height(parent->left) == 2)
         {
             if(get_height(parent->right->right) - get_height(parent->right->left) == 1)
                 return single_right_rotate(parent);
             else
-                return double_right_rotate(parent);
+                return left_right_rotate(parent);
         }
         return parent;        
 }

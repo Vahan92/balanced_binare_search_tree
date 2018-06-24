@@ -18,8 +18,8 @@ class Tree
                 Node* min_node(Node*);
                 Node* single_right_rotate(Node*);
                 Node* single_left_rotate(Node*);
-                Node* double_left_rotate(Node*);
-                Node* double_right_rotate(Node*);
+                Node* right_left_rotate(Node*);
+                Node* left_right_rotate(Node*);
                 int left_count(Node*, int);
                 int get_height(Node*);
                 Node* get_root() { return root;};
