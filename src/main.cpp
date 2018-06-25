@@ -5,15 +5,11 @@
 int main()
 {
         Tree t;
-        t.insert_data(90);
-        t.insert_data(4);
-        t.insert_data(188);
-        t.insert_data(3);
-        t.insert_data(5);
+        for(int i = 0; i<= 25; i++) {
+                t.insert_data(i);
+        }
         t.insert_data(189);
-        t.insert_data(15);
         t.insert_data(27);
-        t.insert_data(9);
         t.insert_data(91);
         t.insert_data(119);
         t.insert_data(129);
@@ -25,7 +21,11 @@ int main()
         //t.print_postorder();
         //t.remove(189);
         t.print_2d(t.get_root(),1);
-        t.remove(119);
+        std::cout << std::endl << std::endl;
+        t.remove(16);
+        t.print_2d(t.get_root(),1);
+        std::cout << std::endl << std::endl;
+        t.remove(15);
         t.print_2d(t.get_root(),1);
         return 0;
 }

@@ -25,22 +25,26 @@ Node* Tree::insert(Node* parent, int data)
         } else if ( data < parent -> value ) {
                 parent -> left = insert(parent -> left, data);
                 if(get_height(parent->left) - get_height(parent->right) == 2) {
-                if(data < parent->left->value)
-                    parent = single_right_rotate(parent);
-                else
-                    parent = left_right_rotate(parent);
+                        if(data < parent->left->value)
+                                parent = single_right_rotate(parent);
+                        else
+                                parent = left_right_rotate(parent);
                 }
         } else {
                 parent -> right = insert(parent -> right, data);
                 if(get_height(parent->right) - get_height(parent->left) == 2) {
-                if(data > parent->right->value)
-                    parent = single_left_rotate(parent);
-                else
-                    parent = right_left_rotate(parent);
+                        std::cout << "p-r-v = " << parent->right->value << std::endl;
+                        if(data > parent->right->value) {
+                                parent = single_left_rotate(parent);
+                        } else {
+                                parent = right_left_rotate(parent);
+                        }
                 }
         }
         parent->height = max(get_height(parent->left), get_height(parent->right))+1;
-        return parent;        
+        root = parent;
+        return parent;
+
 }
 
 void Tree::insert_data(int data)
@@ -80,75 +84,75 @@ void Tree::postorder(Node* parent, int indent = 4)
                         std::cout << "NULL";
                 }
                 /*if (parent->left != NULL) {
-                        std::cout << parent->left->value << "    ";
-                }
-                if (parent->right != NULL) {
-                        std::cout << parent->right->value;
-                }
-                if(p->left) postorder(p->left, indent+4);
-                if(p->right) postorder(p->right, indent+4);
-                if (indent) {
-                        std::cout << std::setw(indent) << ' ';
-                }*/
+                  std::cout << parent->left->value << "    ";
+                  }
+                  if (parent->right != NULL) {
+                  std::cout << parent->right->value;
+                  }
+                  if(p->left) postorder(p->left, indent+4);
+                  if(p->right) postorder(p->right, indent+4);
+                  if (indent) {
+                  std::cout << std::setw(indent) << ' ';
+                  }*/
                 std::cout << std::endl;
         }
 }
 
-int Tree::get_height( Node* N)
+int Tree::get_height( Node* parent)
 {
-    if (N == NULL)
-        return 0;
-    return N->height;
+        if (parent == NULL)
+                return 0;
+        return parent->height;
 }
 
-    Node* Tree::single_right_rotate(Node* parent)
-    {
+Node* Tree::single_right_rotate(Node* parent)
+{
         Node* temp = parent->left;
         parent->left = temp->right;
         temp->right = parent;
         parent->height = max(get_height(parent->left), get_height(parent->right))+1;
         temp->height = max(get_height(temp->left), parent->height)+1;
         return temp;
-    }
+}
 
-    Node* Tree::single_left_rotate(Node* parent)
-    {
+Node* Tree::single_left_rotate(Node* parent)
+{
         Node* temp = parent->right;
         parent->right = temp->left;
         temp->left = parent;
         parent->height = std::max(get_height(parent->left), get_height(parent->right))+1;
         temp->height = max(get_height(parent->right), parent->height)+1 ;
         return temp;
-    }
+}
 
-    Node* Tree::right_left_rotate(Node* parent)
-    {
+Node* Tree::right_left_rotate(Node* parent)
+{
         parent->right = single_right_rotate(parent->right);
         return single_left_rotate(parent);
-    }
+}
 
-    Node* Tree::left_right_rotate(Node* parent)
-    {
+Node* Tree::left_right_rotate(Node* parent)
+{
         parent->left = single_left_rotate(parent->left);
         return single_right_rotate(parent);
 }
 
 void Tree::print_2d(Node* parent, int indent)
 {
-    if (parent != nullptr)
-    {
-        print_2d(parent->right, indent + 4);
-        if (indent > 0) {
-            std::cout << std::setw(indent) << " ";
+        if (parent != nullptr)
+        {
+                print_2d(parent->right, indent + 4);
+                if (indent > 0) {
+                        std::cout << std::setw(indent) << " ";
+                }
+                std::cout << parent->value << std::endl;
+                print_2d(parent->left, indent + 4);
         }
-        std::cout << parent->value << std::endl;
-        print_2d(parent->left, indent + 4);
-    }
 }
 
 void Tree::print_postorder()
 {
-     postorder(root);
+        postorder(root);
 }
 
 Node* Tree::min_node(Node* parent)
@@ -210,23 +214,23 @@ Node* Tree::remove_node(Node* parent, int data)
                 }                     
         }
         if(parent == NULL)
-            return parent;
+                return parent;
 
         parent->height = max(get_height(parent->left), get_height(parent->right))+1;
 
         if(get_height(parent->left) - get_height(parent->right) == 2)
         {
-            if(get_height(parent->left->left) - get_height(parent->left->right) == 1)
-                return single_left_rotate(parent);
-            else
-                return right_left_rotate(parent);
+                if(get_height(parent->left->left) - get_height(parent->left->right) == 1)
+                        return single_left_rotate(parent);
+                else
+                        return right_left_rotate(parent);
         }
         else if(get_height(parent->right) - get_height(parent->left) == 2)
         {
-            if(get_height(parent->right->right) - get_height(parent->right->left) == 1)
-                return single_right_rotate(parent);
-            else
-                return left_right_rotate(parent);
+                if(get_height(parent->right->right) - get_height(parent->right->left) == 1)
+                        return single_right_rotate(parent);
+                else
+                        return left_right_rotate(parent);
         }
         return parent;        
 }
