@@ -33,7 +33,6 @@ Node* Tree::insert(Node* parent, int data)
         } else {
                 parent -> right = insert(parent -> right, data);
                 if(get_height(parent->right) - get_height(parent->left) == 2) {
-                        std::cout << "p-r-v = " << parent->right->value << std::endl;
                         if(data > parent->right->value) {
                                 parent = single_left_rotate(parent);
                         } else {
@@ -197,6 +196,7 @@ Node* Tree::remove_node(Node* parent, int data)
         } else if ( data > parent ->value) {
                 parent -> right = remove_node ( parent -> right, data );
         } else {
+                std::cout << " p-r" << parent->right->value << std::endl;
                 if ( (parent -> left == NULL) && (parent -> right == NULL)) {
                         delete parent;
                         parent = NULL;
@@ -210,7 +210,7 @@ Node* Tree::remove_node(Node* parent, int data)
                 } else {
                         temp = min_node(parent->right);
                         parent->value = temp->value;
-                        parent->right = remove_node(parent->right, temp->value);   
+                        parent->right = remove_node(parent->right, temp->value); 
                 }                     
         }
         if(parent == NULL)
